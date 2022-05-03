@@ -1,0 +1,49 @@
+{% extends "layout.html" %} {% block title %} Dashboard {% endblock %} {% block content
+%}
+<br>
+<br>
+<h1 align="center">Posts</h1>
+
+<br>
+<br>
+        <div class="container px-4 px-lg-5">
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+
+  {% for post in user.posts %}
+  <li class="list-group-item">
+    <a href="/post/{{post.id}}">{{ post.title }}</a>
+    <button type="button" class="close" onClick="deletePost({{ post.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+            </div>
+          </div>
+        </div>
+<br>
+<br>
+<h1 align="center">Add New Post </h1>
+        <div class="container px-4 px-lg-5">
+          <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+<br>
+              <br>
+<form action="/dashboard" method="POST">
+  <label>Title</label>
+  <textarea name="post-title" id="post-title" class="form-control"></textarea>
+  <br />
+  <label>Content</label>
+  <textarea name="post-content" id="post-content" class="form-control"></textarea>
+  <br />
+  <label>Top Image</label>
+  <textarea name="post-bg" id="post-bg" class="form-control"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Post</button>
+  </div>
+</form>
+          </div>
+          </div>
+        </div>
+{% endblock %}
