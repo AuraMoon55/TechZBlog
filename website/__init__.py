@@ -1,17 +1,19 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
+from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 
-DB_NAME = "database.db"
-db = SQLAlchemy()
+
+DB_NAME = ""
+mongo_client = MongoClient(DB_NAME)
+db = mongo_client.techzblog
 mail = Mail()
 
 def create_app():
   app = Flask(__name__)
   app.secret_key = b'\xba\xa2g\x0f\xdej\x97\xe6\xcd\xb6H\x19\xd7\x1e-\xfb\xbe-\x10C\x82:u7#ff\xda\x1a\x9c\xfcSY\x1c5'
-  app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+  
   app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = '465',
@@ -19,7 +21,6 @@ def create_app():
     MAIL_USERNAME = "hentaivillains55@gmail.com",
     MAIL_PASSWORD=  "Anshul#217"
   )
-  db.init_app(app)
   mail.init_app(app)
   
   
@@ -43,9 +44,3 @@ def create_app():
   
   
   return app
-
-
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
