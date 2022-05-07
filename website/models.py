@@ -1,4 +1,6 @@
 from . import db
+import random
+
 
 postsdb = db.posts
 admindb = db.admins
@@ -6,6 +8,7 @@ admindb = db.admins
 
 async def get_admins():
   users = adminsdb.find()
+  users = [{"name": x["name"], "key": x["key"]} for x in users]
   return users
 
 async def check_admin(key):
@@ -33,18 +36,17 @@ async def add_admin(key, name):
   return user
   
 def int_to_str(key):
-  alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+  alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
   key1 = ""
-  for key in str(key):
+  for key in f"{key}{key}":
     key = random.choice(alpha)
     key1 += key
-  key2 = key1[::-1]
-  key3 = key1 + key2
-  lim = int(len(key3)/4)
+ 
+  lim = int(len(key1)/5)
   key = []
   for x in range(lim):
-    x = x*4
-    key.append(key3[int(x):int(x+4)])
+    x = x*5
+    key.append(key1[int(x):int(x+5)])
   key = "-".join(key for key in key)
   return key
 
@@ -77,12 +79,13 @@ async def get_post(post_id=None, admin_key=None):
   if post_id:
     post = await postsdb.find_one({"_id": post_id})
     if post:
-      return post
+      return post["post"]
     else:
       return None
   else:
     admin = await get_admin(admin_key)
     posts = await postsdb.find({"admin": admin})
+    posts = [x["post"] for x in posts]
     return posts
 
 

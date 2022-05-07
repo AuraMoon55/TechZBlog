@@ -1,64 +1,44 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from .models import *
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_user, login_required, logout_user, current_user
+import pytz
 
 auth = Blueprint('auth', __name__)
 
 
-@auth.route("/login", methods=['GET', 'POST'])
-def login():
-  if request.method == 'POST':
-    email = request.form.get('email')
-    password = request.form.get('password')
-    
-    user = User.query.filter_by(email=email).first()
-    if user:
-      if check_password_hash(user.password, password):
-        flash('Logged In Successfully', category='success')
-        login_user(user, remember=True)
-        return redirect(url_for('views.dashboard'))
-      else:
-        flash('Email or Password is Incorrect\nTry Again', category='error')
-    else:
-      flash('User Doesn\'t Exist', category='error')
+@auth.route("/admins")
+async def admins():
+  master_key = request.args.get("key")
+  if master_key == "EybUA15T4oFFD67Kegl88N5Ba9C2rRZW9jQOnC0pL30XIv6iMhfEmtYsGHkPfb1SJx2DA3eV7ccBdwqa4zdu":
+    pass
+  else:
+    return jsonify(status="fail", error="MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY")
+  admins = await get_admins()
+  return jsonify(status="success", admins=admins)
 
+@auth.route("/add_admin")
+async def add_admi():
+  key = request.args.get("user_id")
+  name = request.args.get("name")
+  sx = await add_admin(key, name)
+  return jsonify(status="success", user=sx)
 
-  return render_template("login.html", user=current_user)
-
-
-@auth.route('/logout')
-@login_required
-def logout():
-  logout_user()
-  return redirect(url_for('auth.login'))
-
-
-@auth.route('/sign-up', methods=['GET', 'POST'])
-def sign_up():
-  if request.method == 'POST':
-    email = request.form.get('email')
-    first_name = request.form.get('firstName')
-    password1 = request.form.get('password1')
-    password2 = request.form.get('password2')
-    
-    user = User.query.filter_by(email=email).first()
-    if user:
-      flash('Email Already Exists', category='error')
-    elif len(email) < 4:
-      flash('Email must be greater than 3 characters', category='error')
-    elif len(first_name) < 2:
-      flash('Name must be greater than 1 character', category='error')
-    elif password1 != password2:
-      flash('Passwords don\'t match', category='error')
-    elif len(password1) < 7:
-      flash('Length of password must be atleast 7 characters')
-    else:
-      new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
-      db.session.add(new_user)
-      db.session.commit()
-      login_user(new_user, remember=True)
-      flash('Account created!', category='success')
-      return redirect(url_for('views.dashboard'))
-  return render_template('sign_up.html', user=current_user)
+@auth.route("/post")
+async def create_post():
+  post_title = request.args.get("title")
+  post_admin = request.args.get("api_key")
+  post_content = request.args.get("content")
+  post_img = request.args.get("img_url")
+  post_time = str(datetime.datetime.now(pytz.timezone('Asia/Kolkata'))).split(".")[0]
+  admeme = await get_admin(post_admin)
+  post = {
+    "title": post_time,
+    "content": post_content,
+    "img": post_img,
+    "admin": admeme,
+    "date": post_time
+  }
+  post = await add_post(post, post_admin)
+  return jsonify(status="success", post_id=post)
