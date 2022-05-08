@@ -52,7 +52,7 @@ def int_to_str(key):
 
 
 async def get_posts(lim=None):
-  posts = await postsdb.find()
+  posts = postsdb.find()
   if lim:
     return posts[:int(lim)]
   else:
