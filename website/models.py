@@ -13,7 +13,7 @@ async def get_admins():
 
 async def check_admin(key):
   x = await admindb.find_one({"key": key})
-  if x['name']:
+  if x:
     return True
   else:
     return False
