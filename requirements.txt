@@ -5,7 +5,6 @@ flask-mail
 motor
 asyncio
 gunicorn
-pymongo
 dnspython 
 pytz
 Flask[async]
