@@ -8,9 +8,8 @@ import math
 views = Blueprint('views', __name__)
 
 @views.route('/')
-def home():
-  """
-  posts = Post.query.filter_by().all()
+async def home():
+  posts = await get_posts()
   last = math.ceil(len(posts)/5)
   page = request.args.get('page')
   if(not str(page).isnumeric()):
@@ -28,7 +27,6 @@ def home():
   else:
     prev = "/?page=" + str(page - 1)
     next = "/?page=" + str(page + 1)
-  """
   return render_template('home.html', posts=[{'date': 1791795037, 'title': 'Test A Fuck', 'content': 'Test A Fucking Content', 'admin': 'Aura Chand'}], prev="#", next="#")
 
 
