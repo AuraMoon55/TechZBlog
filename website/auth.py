@@ -22,6 +22,11 @@ async def admins():
 async def add_admi():
   key = request.args.get("user_id")
   name = request.args.get("name")
+  master_key = request.args.get("key")
+  if master_key == "EybUA15T4oFFD67Kegl88N5Ba9C2rRZW9jQOnC0pL30XIv6iMhfEmtYsGHkPfb1SJx2DA3eV7ccBdwqa4zdu":
+    pass
+  else:
+    return jsonify(status="fail", error="MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY")
   sx = await add_admin(key, name)
   return jsonify(status="success", user=sx)
 
