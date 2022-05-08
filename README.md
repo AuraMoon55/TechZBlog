@@ -12,7 +12,7 @@
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a></li>
 </ul>
 <hr>
-<h1>Deployment</h1>
+<h1 align="center">Deployment</h1>
 <p align="center"><b>You can visit this at <a href="https://techzbotsblog.herokuapp.com/">TechZ Bots Blog</a></b><br><br><a href="https://heroku.com/deploy?template=https://github.com/AuraMoon55/TechZBlog.git"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-black?style=for-the-badge&logo=heroku" width="200"></a></p>
 <hr>
 <h1 align="center">Contributors</h1>
