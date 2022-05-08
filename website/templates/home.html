@@ -20,10 +20,10 @@
               {% for post in posts %}
               <!-- Post preview-->
               <div class="post-preview">
-                <a href="post/{{post.id}}">
-                  <h2 class="post-title">{{post.title}}</h2>
+                <a href="post/{{post['_id']}}">
+                  <h2 class="post-title">{{post['post']['title']}}</h2>
                 </a>
-                <p class="post-meta">Posted by {{post.admin}} On {{post.date}}
+                <p class="post-meta">Posted by {{post['admin']}} On {{post['post']['date']}}
                 </p>
               </div>
               <!-- Divider-->
