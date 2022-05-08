@@ -5,7 +5,7 @@ from flask_mail import Mail
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 
 
-DB_NAME = ""
+DB_NAME = "mongodb+srv://abc:abc@cluster0.dxxoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 mongo_client = MongoClient(DB_NAME)
 db = mongo_client.techzblog
 mail = Mail()
