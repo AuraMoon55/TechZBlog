@@ -5,5 +5,5 @@ flask-mail
 motor
 asyncio
 gunicorn
-pymongo["srv"]
+pymongo
 dnspython 
