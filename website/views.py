@@ -9,6 +9,7 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
+"""
   posts = Post.query.filter_by().all()
   last = math.ceil(len(posts)/5)
   page = request.args.get('page')
@@ -27,14 +28,14 @@ def home():
   else:
     prev = "/?page=" + str(page - 1)
     next = "/?page=" + str(page + 1)
-
-  return render_template('home.html', posts=posts, prev=prev, next=next)
+"""
+  return render_template('home.html')#, posts=posts, prev=prev, next=next)
 
 
 
 
 @views.route('/contact', methods=['GET','POST'])
-def contact():
+async def contact():
   if request.method == 'POST':
     name = request.form.get('name')
     email = request.form.get('email')
@@ -50,6 +51,6 @@ def contact():
 
 
 @views.route('/post/<post_id>')
-def post(post_id):
+async def post(post_id):
   post = await get_post(post_id)
   return render_template('post.html', post=post)
