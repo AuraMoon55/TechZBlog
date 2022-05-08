@@ -8,7 +8,8 @@ admindb = db.admins
 
 async def get_admins():
   users = admindb.find()
-  users = [{"name": x["name"], "key": x["key"]} for x in users.to_list(length=None)]
+  users = await users.to_list(length=None)
+  users = [{"name": x["name"], "key": x["key"]} for x in users]
   return users
 
 async def check_admin(key):
@@ -53,7 +54,8 @@ def int_to_str(key):
 
 async def get_posts(lim=None):
   posts = postsdb.find()
-  posts = [post for post in posts.to_list(length=None)]
+  posts = await posts.to_list(length=None)
+  posts = [post for post in posts]
   if lim:
     posts = posts[:int(lim)]
   else:
