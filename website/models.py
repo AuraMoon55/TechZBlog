@@ -7,7 +7,7 @@ admindb = db.admins
 
 
 async def get_admins():
-  users = adminsdb.find()
+  users = admindb.find()
   users = [{"name": x["name"], "key": x["key"]} for x in users]
   return users
 
@@ -32,7 +32,7 @@ async def add_admin(key, name):
     keyt = int_to_str(key)
     check = await check_admin(keyt)
   key = keyt
-  user = await adminsdb.insert_one({'key': key, 'name': name})
+  user = await admindb.insert_one({'key': key, 'name': name})
   return user
   
 def int_to_str(key):
