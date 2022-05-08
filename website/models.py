@@ -9,7 +9,6 @@ admindb = db.admins
 async def get_admins():
   users = admindb.find()
   users = await users.to_list(length=None)
-  users = [{"name": x["name"], "key": x["key"]} for x in users]
   return users
 
 async def check_admin(key):
