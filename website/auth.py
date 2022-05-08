@@ -16,7 +16,7 @@ async def admins():
   else:
     return jsonify(status="fail", error="MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY")
   admins = await get_admins()
-  return jsonify(status="success", admins=admins)
+  return {"status":"success", "admins":admins}
 
 @auth.route("/add_admin")
 async def add_admi():
@@ -28,7 +28,7 @@ async def add_admi():
   else:
     return jsonify(status="fail", error="MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY")
   sx = await add_admin(key, name)
-  return jsonify(status="success", user=sx)
+  return {"status":"success", "user":sx}
 
 @auth.route("/post")
 async def create_post():
