@@ -9,7 +9,7 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-"""
+  """
   posts = Post.query.filter_by().all()
   last = math.ceil(len(posts)/5)
   page = request.args.get('page')
@@ -28,8 +28,8 @@ def home():
   else:
     prev = "/?page=" + str(page - 1)
     next = "/?page=" + str(page + 1)
-"""
-  return render_template('home.html')#, posts=posts, prev=prev, next=next)
+  """
+  return render_template('home.html', posts=None, prev="#", next="#")
 
 
 
