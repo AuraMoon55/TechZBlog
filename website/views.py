@@ -27,7 +27,7 @@ async def home():
   else:
     prev = "/?page=" + str(page - 1)
     next = "/?page=" + str(page + 1)
-  return render_template('home.html', posts=[{'date': 1791795037, 'title': 'Test A Fuck', 'content': 'Test A Fucking Content', 'admin': 'Aura Chand'}], prev="#", next="#")
+  return render_template('home.html', posts=posts, prev=prev, next=next)
 
 
 
