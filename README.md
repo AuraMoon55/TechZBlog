@@ -18,4 +18,5 @@
 <h1 align="center">Contributors</h1>
 <ul>
   <li><a href="https://github.com/AuraMoon55" target="_blank">AuraMoon55</a></li>
+  <li><a href="https://github.com/TechShreyash" target="_blank">Tech Shreyash</a></li>
 </ul>
