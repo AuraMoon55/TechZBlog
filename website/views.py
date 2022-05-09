@@ -7,8 +7,16 @@ import math
 
 views = Blueprint('views', __name__)
 
+
+
 @views.route('/')
 async def home():
+  posts = await get_posts(lim=3)
+  return render_template('home.html', posts=posts)
+
+
+@views.route('/posts')
+async def post_preview():
   posts = await get_posts()
   last = math.ceil(len(posts)/5)
   page = request.args.get('page')
@@ -27,7 +35,7 @@ async def home():
   else:
     prev = "/?page=" + str(page - 1)
     next = "/?page=" + str(page + 1)
-  return render_template('home.html', posts=posts, prev=prev, next=next)
+  return render_template('posts.html', posts=posts, prev=prev, next=next)
 
 
 
