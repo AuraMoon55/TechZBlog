@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import *
+import asyncio
 from . import db, mail
 import json
 import math
@@ -11,30 +12,39 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 async def home():
-  posts = await get_posts(lim=3)
+  try:
+    posts = await get_posts(lim=3)
+  except:
+    posts = []
   return render_template('home.html', posts=posts)
 
 
 @views.route('/posts')
 async def post_preview():
-  posts = await get_posts()
-  last = math.ceil(len(posts)/5)
-  page = request.args.get('page')
-  if(not str(page).isnumeric()):
-    page = 1
-  page= int(page)
-  posts = posts[(page-1)*int(5): (page-1)*int(5)+ int(5)]
-  #Pagination Logic
-  #First
-  if (page==1):
-    prev = "#"
-    next = "/?page="+ str(page+1)
-  elif(page==last):
-    prev = "/?page=" + str(page - 1)
-    next = "#"
-  else:
-    prev = "/?page=" + str(page - 1)
-    next = "/?page=" + str(page + 1)
+  #loop = asyncio.get_event_loop()
+  try:
+    posts = await get_posts()
+    last = math.ceil(len(posts)/5)
+    page = request.args.get('page')
+    if(not str(page).isnumeric()):
+      page = 1
+    page= int(page)
+    posts = posts[(page-1)*int(5): (page-1)*int(5)+ int(5)]
+    #Pagination Logic
+    #First
+    if (page==1):
+      prev = "#"
+      next = "/?page="+ str(page+1)
+    elif(page==last):
+      prev = "/?page=" + str(page - 1)
+      next = "#"
+    else:
+      prev = "/?page=" + str(page - 1)
+      next = "/?page=" + str(page + 1)
+    except:
+      posts = []
+      prev = "#"
+      next = "#"
   return render_template('posts.html', posts=posts, prev=prev, next=next)
 
 
