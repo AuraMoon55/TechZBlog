@@ -4,6 +4,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 import pytz
+import sys
 
 auth = Blueprint('auth', __name__)
 
@@ -14,9 +15,13 @@ async def admins():
   if master_key == "EybUA15T4oFFD67Kegl88N5Ba9C2rRZW9jQOnC0pL30XIv6iMhfEmtYsGHkPfb1SJx2DA3eV7ccBdwqa4zdu":
     pass
   else:
-    return jsonify(status="fail", error="MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY")
-  admins = await get_admins()
-  return {"status":"success", "admins":admins}
+    return """{"status":"fail", "error":"MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY"}"""
+  try:
+    admins = await get_admins()
+  except:
+    sys.exit()
+    admins = await get_admins()
+  return """{"status":"success", "admins":admins}"""
 
 @auth.route("/add_admin")
 async def add_admi():
