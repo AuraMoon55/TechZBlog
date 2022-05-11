@@ -8,7 +8,8 @@ admindb = db.admins
 
 async def get_admins():
   users = []
-  async for user in admindb.find(): users.append(user)
+  async for user in admindb.find():
+    users.append(user)
   return users
 
 async def check_admin(key):
