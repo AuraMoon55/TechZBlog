@@ -21,7 +21,7 @@ async def admins():
   except:
     sys.exit()
     admins = await get_admins()
-  return """{"status":"success", "admins":admins}"""
+  return "{" + f""""status":"success", "admins":{admins}""" + "}"
 
 @auth.route("/add_admin")
 async def add_admi():
@@ -31,7 +31,7 @@ async def add_admi():
   if master_key == "EybUA15T4oFFD67Kegl88N5Ba9C2rRZW9jQOnC0pL30XIv6iMhfEmtYsGHkPfb1SJx2DA3eV7ccBdwqa4zdu":
     pass
   else:
-    return jsonify(status="fail", error="MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY")
+    return {"status":"fail", "error":"MASTER KEY IS WRONG PLEASE ENTER VALID MASTER KEY"}
   sx = await add_admin(key, name)
   return {"status":"success", "user":sx}
 
